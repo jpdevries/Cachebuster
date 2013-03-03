@@ -1,0 +1,18 @@
+Changelog for cachebuster integration into MODx Revolution.
+
+cachebuster 1.3
+====================================
+ - created buildscript
+ - added to GitHub
+
+cachebuster 1.2
+====================================
+ - add option to set result of [[!cachebuster]] to a desired placeholder
+
+cachebuster 1.1
+====================================
+ - adds smartcache Chunk which, controlled by cb.cachebust System Setting, will output either a cache busted string or your sites version for cache control
+
+cachebuster 1.0
+====================================
+ - initial commit
