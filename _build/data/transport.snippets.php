@@ -18,8 +18,6 @@ $snippets[1]->fromArray(array(
     'description' => 'Returns a truly unique number.',
     'snippet' => getSnippetContent($sources['elements'].'snippets/snippet.cachebuster.php'),
 ),'',true,true);
-$properties = include $sources['data'].'properties/properties.cachebuster.php';
-$snippets[1]->setProperties($properties);
 unset($properties);
 
 return $snippets;
