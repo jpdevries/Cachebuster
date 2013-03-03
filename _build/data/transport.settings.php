@@ -37,8 +37,8 @@ $settings['cb.cachebuster']->fromArray(array(
     'area' => 'cache',
 ),'',true,true);
 
-$settings['cb.cachebuster']= $modx->newObject('modSystemSetting');
-$settings['cb.cachebuster']->fromArray(array(
+$settings['cb.site_ver']= $modx->newObject('modSystemSetting');
+$settings['cb.site_ver']->fromArray(array(
     'key' => 'cb.site_ver',
     'value' => '0.1',
     'xtype' => 'textfield',

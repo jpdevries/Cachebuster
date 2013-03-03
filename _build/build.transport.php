@@ -61,13 +61,26 @@ $category->addMany($snippets);
 $modx->log(modX::LOG_LEVEL_INFO,'Packaging in chunks...');
 $chunks = include $sources['data'].'transport.chunks.php';
 if (empty($chunks)) $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in chunks.');
-$category->addMany($chunks);
+$category->addMany($chunks); 
 
 /* add settings */
 $modx->log(modX::LOG_LEVEL_INFO,'Packaging in settings...');
 $settings = include $sources['data'].'transport.settings.php';
-if (empty($settings)) $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in settings.');
-$category->addMany($settings);
+if (!is_array($settings)) {
+    $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in settings.');
+} else {
+    $attributes= array(
+        xPDOTransport::UNIQUE_KEY => 'key',
+        xPDOTransport::PRESERVE_KEYS => true,
+        xPDOTransport::UPDATE_OBJECT => false,
+    );
+    foreach ($settings as $setting) {
+        $vehicle = $builder->createVehicle($setting,$attributes);
+        $builder->putVehicle($vehicle);
+    }
+    $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($settings).' System Settings.');
+}
+unset($settings,$setting,$attributes);
 
 /* create category vehicle */
 $attr = array(
@@ -77,6 +90,11 @@ $attr = array(
     xPDOTransport::RELATED_OBJECTS => true,
     xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
         'Snippets' => array(
+            xPDOTransport::PRESERVE_KEYS => false,
+            xPDOTransport::UPDATE_OBJECT => true,
+            xPDOTransport::UNIQUE_KEY => 'name',
+        ),
+        'Chunks' => array(
             xPDOTransport::PRESERVE_KEYS => false,
             xPDOTransport::UPDATE_OBJECT => true,
             xPDOTransport::UNIQUE_KEY => 'name',
